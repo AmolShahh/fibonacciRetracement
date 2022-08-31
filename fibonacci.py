@@ -1,8 +1,9 @@
 import datetime
 import yfinance as yf
 import time
-# import smtplib
-# from email.message import EmailMessage
+import smtplib
+from email.message import EmailMessage
+import boto3
 
 
 def calcRetracements(swing):
@@ -16,17 +17,56 @@ def getData():
         time.sleep(2)
     return data
 
-# msg = EmailMessage()
-# msg['Subject'] = 'Fibonacci Retracement'
-# msg['From'] = 'FibonaciiRetracement@gmail.com'
-# msg['To'] = 'amol@nirenshah.com'
-# msg.set_content('SPY has hit 0.5 level')
+def send_level_email():
+    ses_client = boto3.client("ses", region_name="us-east-1")
+    CHARSET = "UTF-8"
 
-# msg2 = EmailMessage()
-# msg2['Subject'] = 'Fibonacci Retracement'
-# msg2['From'] = 'FibonaciiRetracement@gmail.com'
-# msg2['To'] = 'amol@nirenshah.com'
-# msg2.set_content('SPY has hit 0.5 level, NOT HIGH ENOUGH SWING')
+    response = ses_client.send_email(
+        Destination={
+            "ToAddresses": [
+                "amol@nirenshah.com",
+            ],
+        },
+        Message={
+            "Body": {
+                "Text": {
+                    "Charset": CHARSET,
+                    "Data": "SPY has hit 0.5 level with enough swing",
+                }
+            },
+            "Subject": {
+                "Charset": CHARSET,
+                "Data": "SPY Fibonacci Retracement tracker",
+            },
+        },
+        Source="FibonacciiRetracement@gmail.com",
+    )
+
+def send_email_low_swing():
+    ses_client = boto3.client("ses", region_name="us-east-1")
+    CHARSET = "UTF-8"
+
+    response = ses_client.send_email(
+        Destination={
+            "ToAddresses": [
+                "amol@nirenshah.com",
+            ],
+        },
+        Message={
+            "Body": {
+                "Text": {
+                    "Charset": CHARSET,
+                    "Data": "SPY has hit 0.5 level WITHOUT enough swing",
+                }
+            },
+            "Subject": {
+                "Charset": CHARSET,
+                "Data": "SPY Fibonacci Retracement tracker",
+            },
+        },
+        Source="FibonacciiRetracement@gmail.com",
+    )
+
 
 ticker = "SPY"
 dayStart = str(datetime.datetime.now().date()) + " 08:00:00"
@@ -46,14 +86,16 @@ data = getData()
 min = data[-1:]['Low']
 max = data[-1:]['High']
 swing = max[0] - min[0]
+
 isTrue = str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < end
-while True:
+
+while isTrue:
     data = getData()
     current = data[-1:]['Low']
     current_max = data[-1:]['High']
-    print(min)
-    print(current)
-    print("--------")
+    # print(min)
+    # print(current)
+    # print("--------")
     if min[0] > current[0]:
         min = current
         swing = max[0] - min[0]
@@ -63,10 +105,10 @@ while True:
         swing = max[0] - min[0]
         level = calcRetracements(swing)
     
-    print(current)
-    print(level)
-    print(min)
-    print(max)
+    # print(current)
+    # print(level)
+    # print(min)
+    # print(max)
 
     if current[0] > level*0.95 and current[0] < level*1.05:
         if swing >= max[0] * 0.00625:
@@ -74,8 +116,10 @@ while True:
             min = current
             max = current_max
             swing = 0
-        else:
-            print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
+            send_level_email()
+        # else:
+        #     print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
+        #     send_email_low_swing()
 
         
         
