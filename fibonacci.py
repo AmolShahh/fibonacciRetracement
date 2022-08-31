@@ -46,6 +46,7 @@ data = getData()
 min = data[-1:]['Low']
 max = data[-1:]['High']
 swing = max[0] - min[0]
+
 while str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < end:
     data = getData()
     current = data[-1:]['Low']
@@ -73,12 +74,8 @@ while str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < en
             min = current
             max = current_max
             swing = 0
-#            with smtplib.SMTP('localhost') as s:
-#                s.send_message(msg)
         else:
             print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
-#            with smtplib.SMTP('localhost') as s:
-#                s.send_message(msg2)
 
         
         
