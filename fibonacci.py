@@ -73,12 +73,12 @@ while str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < en
             min = current
             max = current_max
             swing = 0
-            with smtplib.SMTP('localhost') as s:
-                s.send_message(msg)
+#            with smtplib.SMTP('localhost') as s:
+#                s.send_message(msg)
         else:
             print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
-            with smtplib.SMTP('localhost') as s:
-                s.send_message(msg2)
+#            with smtplib.SMTP('localhost') as s:
+#                s.send_message(msg2)
 
         
         
