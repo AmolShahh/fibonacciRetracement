@@ -46,8 +46,8 @@ data = getData()
 min = data[-1:]['Low']
 max = data[-1:]['High']
 swing = max[0] - min[0]
-
-while str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < end:
+isTrue = str(datetime.datetime.now()) > start and str(datetime.datetime.now()) < end
+while True:
     data = getData()
     current = data[-1:]['Low']
     current_max = data[-1:]['High']
