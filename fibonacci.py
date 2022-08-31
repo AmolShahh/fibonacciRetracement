@@ -16,17 +16,17 @@ def getData():
         time.sleep(2)
     return data
 
-msg = EmailMessage()
-msg['Subject'] = 'Fibonacci Retracement'
-msg['From'] = 'FibonaciiRetracement@gmail.com'
-msg['To'] = 'amol@nirenshah.com'
-msg.set_content('SPY has hit 0.5 level')
+# msg = EmailMessage()
+# msg['Subject'] = 'Fibonacci Retracement'
+# msg['From'] = 'FibonaciiRetracement@gmail.com'
+# msg['To'] = 'amol@nirenshah.com'
+# msg.set_content('SPY has hit 0.5 level')
 
-msg2 = EmailMessage()
-msg2['Subject'] = 'Fibonacci Retracement'
-msg2['From'] = 'FibonaciiRetracement@gmail.com'
-msg2['To'] = 'amol@nirenshah.com'
-msg2.set_content('SPY has hit 0.5 level, NOT HIGH ENOUGH SWING')
+# msg2 = EmailMessage()
+# msg2['Subject'] = 'Fibonacci Retracement'
+# msg2['From'] = 'FibonaciiRetracement@gmail.com'
+# msg2['To'] = 'amol@nirenshah.com'
+# msg2.set_content('SPY has hit 0.5 level, NOT HIGH ENOUGH SWING')
 
 ticker = "SPY"
 dayStart = str(datetime.datetime.now().date()) + " 08:00:00"
