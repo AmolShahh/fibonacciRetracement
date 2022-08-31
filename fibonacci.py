@@ -1,8 +1,8 @@
 import datetime
 import yfinance as yf
 import time
-import smtplib
-from email.message import EmailMessage
+# import smtplib
+# from email.message import EmailMessage
 
 
 def calcRetracements(swing):
