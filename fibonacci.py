@@ -1,10 +1,5 @@
-from cmath import log
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 import datetime
 import yfinance as yf
-import schedule
 import time
 
 def calcRetracements(swing):
