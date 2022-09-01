@@ -18,7 +18,7 @@ def getData():
 def send_level_email(stock_ticker, price):
     ses_client = boto3.client("ses", region_name="us-east-1")
     CHARSET = "UTF-8"
-    DATA = stock_ticker + " has hit 0.5 level at price " + price
+    DATA = stock_ticker + " has hit 0.5 level at price $" + price
     response = ses_client.send_email(
         Destination={
             "ToAddresses": [
@@ -79,7 +79,7 @@ while True:
             min = current
             max = current_max
             swing = 0
-            send_level_email()
+            send_level_email(ticker, current[0])
         # else:
         #     print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
         #     send_email_low_swing()
