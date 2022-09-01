@@ -79,6 +79,7 @@ while True:
             min = current
             max = current_max
             swing = 0
+            level = calcRetracements(swing)
             send_level_email(ticker, current[0])
         # else:
         #     print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
