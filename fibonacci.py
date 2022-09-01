@@ -50,6 +50,7 @@ max = data[-1:]['High']
 swing = max[0] - min[0]
 
 
+send_level_email()
 
 while True:
     data = getData()
