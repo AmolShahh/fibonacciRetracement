@@ -1,4 +1,3 @@
-import datetime
 import yfinance as yf
 import time
 import boto3
@@ -15,14 +14,14 @@ def getData():
         time.sleep(2)
     return data
 
-def send_level_email(stock_ticker, price):
+def send_level_email(stock_ticker, price, min, max):
     ses_client = boto3.client("ses", region_name="us-east-1")
     CHARSET = "UTF-8"
-    DATA = stock_ticker + " has hit 0.5 level at price $" + price
+    DATA = stock_ticker + " has hit 0.5 level at price $" + price + ". \nMin: " + min + "\nMax: " + max
     response = ses_client.send_email(
         Destination={
             "ToAddresses": [
-                "amol@nirenshah.com",
+                "amol@nirenshah.com", "reviewstopclass@gmail.com",
             ],
         },
         Message={
@@ -73,14 +72,14 @@ while True:
     # print(min)
     # print(max)
 
-    if current[0] > level*0.95 and current[0] < level*1.05:
+    if current[0] < level:
         if swing >= max[0] * 0.00625:
             print("****************Hit .5 Level***************************")
             min = current
             max = current_max
             swing = 0
             level = calcRetracements(swing)
-            send_level_email(ticker, current[0])
+            send_level_email(ticker, current[0], min, max)
         # else:
         #     print("\\\\\\\\\\\\\\\\\\\\\\\Hit but not enough swing////////////////////////")
         #     send_email_low_swing()
@@ -88,4 +87,4 @@ while True:
         
         
 
-    time.sleep(60)
+    time.sleep(300)
