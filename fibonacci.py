@@ -11,11 +11,11 @@ def calcRetracements(swing):
     level = .5
     return max[0] - level*swing
 
-def calcSellRetracement():
+def calcSellRetracement(swing):
     level = 0.236
     return max[0] - level*swing
 
-def calcLossRetracement():
+def calcLossRetracement(swing):
     level = 0.786
     return max[0] - level*swing
 
@@ -153,7 +153,7 @@ while True:
     current_max = data[-1:]['High']
 
     current_time = datetime.datetime.now()
-    if current_time.hour == 21 and current_time.minute > 55:
+    if current_time.hour == 21 and current_time.minute >= 50:
         send_daily_report(level_count, sell_count, loss_count)
 
     if min[0] > current[0]:
@@ -179,14 +179,14 @@ while True:
             level = calcRetracements(swing)
             level_count += 1
             
-    if current[0] > sell_level and sell_level > level and notify_red_zone:
+    if current[0] > sell_level and sell_level > 0:
         send_sell_email(ticker, current[0])
         sell_level = 0
         loss_level = 0
         notify_red_zone = False
         sell_count += 1
         
-    if current[0] < loss_level and notify_red_zone:
+    if current[0] < loss_level:
         send_loss_email(ticker, current[0])
         sell_level = 0
         loss_level = 0
